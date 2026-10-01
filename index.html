@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Imprescindible para que se vea bien en celulares -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Comisiones</title>
+    <link rel="stylesheet" href="ventas.css">
+    <script src="ventas.js"></script>
+    <script src="utilitarios.js"></script>
+</head>
+<body>
+
+    <!-- Luces decorativas de fondo (solo visual) -->
+    <div class="fondo-decorativo" aria-hidden="true">
+        <span class="orbe orbe-1"></span>
+        <span class="orbe orbe-2"></span>
+        <span class="orbe orbe-3"></span>
+    </div>
+
+    <main class="contenedor">
+        <header class="encabezado">
+            <span class="insignia">✦ Ventas</span>
+            <h1>Calculadora de Comisiones</h1>
+            <p class="subtitulo">Ingresa tus datos y descubre cuánto ganaste.</p>
+        </header>
+
+        <div class="formulario">
+            <div class="campo">
+                <label for="txtSueldoBase">Salario Base</label>
+                <input type="text" id="txtSueldoBase" onblur="validarSueldoBase()" inputmode="decimal" placeholder="Ej. 450.00" autocomplete="off">
+                <span id="lblErrorSueldoBase" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="txtVentas">Número de ventas</label>
+                <input type="text" id="txtVentas" onblur="validarVentas()" inputmode="numeric" placeholder="Ej. 12" autocomplete="off">
+                <span id="lblErrorVentas" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="txtPrecio">Precio del producto</label>
+                <input type="text" id="txtPrecio" onblur="validarPrecio()" inputmode="decimal" placeholder="Ej. 25.50" autocomplete="off">
+                <span id="lblErrorPrecio" class="error"></span>
+            </div>
+        </div>
+
+        <button type="button" onclick="validarYCalcular()">Calcular Comisión</button>
+
+        <section class="resultados">
+            <h2>Resultados</h2>
+            <p class="fila">
+                <span class="etiqueta">Salario Base</span>
+                <span id="spSueldoBase" class="valor"></span>
+            </p>
+            <p class="fila">
+                <span class="etiqueta">Comisión</span>
+                <span id="spComision" class="valor"></span>
+            </p>
+            <p class="fila fila-total">
+                <span class="etiqueta">Total</span>
+                <span id="spTotal" class="valor"></span>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

@@ -1,35 +1,450 @@
+/* ============================================
+   Paleta
+   ============================================ */
+:root {
+    --borgona: #800020;
+    --crema: #F3E6D5;
+    --marfil: #FFF9F2;
+    --rosa: #D45060;
+
+    /* Tonos derivados de la paleta (para texto legible y transparencias) */
+    --texto: #4a1420;
+    --texto-suave: #8a5a62;
+    --borgona-10: rgba(128, 0, 32, 0.10);
+    --borgona-25: rgba(128, 0, 32, 0.25);
+    --rosa-20: rgba(212, 80, 96, 0.20);
+    --rojo-error: #c8102e;
+    --rojo-15: rgba(200, 16, 46, 0.15);
+
+    --radio-grande: 28px;
+    --radio: 14px;
+    --fuente-titulo: Georgia, "Times New Roman", serif;
+    --fuente-texto: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ============================================
+   Fondo
+   ============================================ */
 body {
-    font-family: Arial;
-    background-color: #0f172a;
-    color: white;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    padding: 32px 16px;
+    font-family: var(--fuente-texto);
+    color: var(--texto);
+    background-color: var(--marfil);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(212, 80, 96, 0.18), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(128, 0, 32, 0.14), transparent 50%),
+        linear-gradient(160deg, var(--marfil) 0%, var(--crema) 100%);
+    overflow-x: hidden;
 }
 
+/* Luces difuminadas que flotan detrás de la tarjeta */
+.fondo-decorativo {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.orbe {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    animation: flotar 14s ease-in-out infinite alternate;
+}
+
+.orbe-1 {
+    width: 320px;
+    height: 320px;
+    background: var(--rosa);
+    top: -80px;
+    left: -60px;
+}
+
+.orbe-2 {
+    width: 380px;
+    height: 380px;
+    background: var(--borgona);
+    bottom: -120px;
+    right: -100px;
+    opacity: 0.35;
+    animation-delay: -5s;
+}
+
+.orbe-3 {
+    width: 220px;
+    height: 220px;
+    background: #f0b8a8;
+    top: 45%;
+    left: 60%;
+    opacity: 0.4;
+    animation-delay: -9s;
+}
+
+@keyframes flotar {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(30px, -25px) scale(1.08); }
+}
+
+/* ============================================
+   Tarjeta principal (efecto vidrio)
+   ============================================ */
 .contenedor {
-    background-color: #1e293b;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    padding: clamp(24px, 6vw, 40px);
+    background: rgba(255, 249, 242, 0.72);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--radio-grande);
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 20px 50px -12px var(--borgona-25),
+        0 8px 20px -8px rgba(212, 80, 96, 0.25);
+    animation: aparecer 0.6s ease-out both;
+}
+
+/* Línea de luz superior */
+.contenedor::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 12%;
+    right: 12%;
+    height: 3px;
+    border-radius: 0 0 6px 6px;
+    background: linear-gradient(90deg, transparent, var(--rosa), var(--borgona), var(--rosa), transparent);
+    opacity: 0.8;
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   Encabezado
+   ============================================ */
+.encabezado {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.insignia {
+    display: inline-block;
+    padding: 6px 14px;
+    margin-bottom: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--borgona);
+    background: var(--rosa-20);
+    border-radius: 999px;
+}
+
+h1 {
+    margin: 0;
+    font-family: var(--fuente-titulo);
+    font-size: clamp(1.6rem, 6vw, 2.1rem);
+    font-weight: 700;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--borgona) 20%, var(--rosa) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitulo {
+    margin: 10px 0 0;
+    font-size: 0.95rem;
+    color: var(--texto-suave);
+}
+
+/* ============================================
+   Formulario
+   ============================================ */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.error {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--rojo-error);
+    padding-left: 4px;
+    animation: aparecerError 0.25s ease-out;
+}
+
+@keyframes aparecerError {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Resalta el input del campo que tiene un error visible */
+.campo:has(.error:not(:empty)) input {
+    border-color: var(--rojo-error);
+    box-shadow: 0 0 0 4px var(--rojo-15);
+}
+
+.error:empty {
+    display: none;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--borgona);
 }
 
 input {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 5px;
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 1rem; /* 16px evita el zoom automático en iPhone */
+    color: var(--texto);
+    background: var(--marfil);
+    border: 1.5px solid var(--crema);
+    border-radius: var(--radio);
+    outline: none;
+    box-shadow: 0 2px 6px var(--borgona-10) inset;
+    transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s;
 }
 
+input::placeholder {
+    color: #c4a9a4;
+}
+
+input:hover {
+    border-color: #e8c9c0;
+}
+
+input:focus {
+    background: #fff;
+    border-color: var(--rosa);
+    box-shadow:
+        0 0 0 4px var(--rosa-20),
+        0 6px 18px -6px rgba(212, 80, 96, 0.45);
+}
+
+/* ============================================
+   Botón
+   ============================================ */
 button {
+    position: relative;
     width: 100%;
-    padding: 10px;
-    background-color: #22c55e;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--marfil);
+    background: linear-gradient(135deg, var(--borgona) 0%, var(--rosa) 100%);
     border: none;
-    color: white;
+    border-radius: 16px;
     cursor: pointer;
+    overflow: hidden;
+    box-shadow:
+        0 10px 25px -8px rgba(128, 0, 32, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    transition: transform 0.2s ease, box-shadow 0.3s ease, filter 0.3s ease;
+}
+
+/* Brillo que cruza el botón al pasar el mouse */
+button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
 }
 
 button:hover {
-    background-color: #16a34a;
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow:
+        0 16px 35px -10px rgba(128, 0, 32, 0.7),
+        0 0 25px rgba(212, 80, 96, 0.45);
+}
+
+button:hover::after {
+    left: 125%;
+}
+
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:focus-visible {
+    outline: 3px solid var(--rosa);
+    outline-offset: 3px;
+}
+
+/* ============================================
+   Resultados
+   ============================================ */
+.resultados {
+    margin-top: 28px;
+    padding: 22px;
+    background: linear-gradient(160deg, #fff 0%, var(--crema) 140%);
+    border: 1px solid rgba(243, 230, 213, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px -15px var(--borgona-25);
+}
+
+h2 {
+    margin: 0 0 14px;
+    font-family: var(--fuente-titulo);
+    font-size: 1.2rem;
+    color: var(--borgona);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Pequeña línea decorativa junto al título */
+h2::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--rosa), transparent);
+    opacity: 0.5;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 0;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(212, 80, 96, 0.3);
+}
+
+.etiqueta {
+    font-size: 0.9rem;
+    color: var(--texto-suave);
+}
+
+.valor {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--texto);
+    word-break: break-word;
+}
+
+/* Guion mientras aún no hay resultado */
+.valor:empty::before {
+    content: "—";
+    color: #c4a9a4;
+    font-weight: 400;
+}
+
+/* Fila del total destacada */
+.fila-total {
+    margin-top: 10px;
+    padding: 14px 16px;
+    border-bottom: none;
+    border-radius: var(--radio);
+    background: linear-gradient(135deg, var(--borgona), #a3223d);
+    box-shadow: 0 8px 20px -8px rgba(128, 0, 32, 0.6);
+}
+
+.fila-total .etiqueta {
+    color: var(--crema);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+}
+
+.fila-total .valor {
+    color: var(--marfil);
+    font-size: 1.25rem;
+}
+
+.fila-total .valor:empty::before {
+    color: rgba(243, 230, 213, 0.6);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 480px) {
+    body {
+        padding: 20px 14px;
+        align-items: flex-start; /* en pantallas bajas, que no se corte arriba */
+    }
+
+    .contenedor {
+        border-radius: 22px;
+    }
+
+    .encabezado {
+        margin-bottom: 22px;
+    }
+
+    .resultados {
+        padding: 18px;
+    }
+
+    .orbe {
+        filter: blur(55px);
+    }
+}
+
+@media (min-width: 768px) {
+    .contenedor {
+        max-width: 460px;
+    }
+}
+
+/* Respeta a quien prefiere menos animaciones */
+@media (prefers-reduced-motion: reduce) {
+    .orbe,
+    .contenedor {
+        animation: none;
+    }
+
+    button,
+    button::after,
+    input {
+        transition: none;
+    }
+
+    .error {
+        animation: none;
+    }
 }

@@ -1,0 +1,28 @@
+Use Claude Opus 5.5 para esta tarea.
+
+[código CSS]
+
+[código HTML]
+
+Necesito que mi página sea responsive (que se vea bien tanto en PC como en celulares).
+Actúa como un diseñador gráfico con experiencia y preferencia por los estilos modernos y cálidos.
+Ayúdame a mejorar el diseño de esta página web sin usar librerías externas como Tailwind. 
+No cambies ningún id, ya que, si lo haces, la lógica dejaría de funcionar. Utiliza difuminados, sombras, iluminaciones, etc.
+Quiero que la temática de esta página sea moderna, pero con toques de colores fuertes como el borgoña, sin llegar a ser abrumadora. 
+Utiliza la siguiente paleta de colores:
+
+#800020
+#F3E6D5
+#FFF9F2
+#D45060
+rgb(128, 0, 32)
+rgb(243, 230, 213)
+rgb(255, 249, 242)
+rgb(212, 80, 96)
+
+PROMPT PARA MEJORAR VALIDACIONES:
+Quiero validar los inputs con JavaScript. Debe mostrarse un mensaje de validación debajo de cada campo,
+ en color rojo y cursiva. 
+Los campos no pueden quedar vacíos, solo deben aceptar números y tener un máximo de 5 dígitos. 
+No cambies ninguno de los ID ni modifiques las funciones existentes. 
+Mantén la validación acorde con la estética actual de la página.
